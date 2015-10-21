@@ -21,15 +21,12 @@ RUN apt-get update --fix-missing && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ADD virtual-host.conf /etc/apache2/sites-enabled/000-default.conf
-ADD entrypoint.sh /entrypoint.sh
-
-RUN chmod 755 /*.sh
 
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 
 # Configure /app folder with sample app
-RUN mkdir -p /app && rm -fr /var/www/html
+RUN mkdir -p /app && touch /app/index.html && rm -fr /var/www/html
 RUN a2enmod rewrite
 
 # Configure xdebug setting and add memory
